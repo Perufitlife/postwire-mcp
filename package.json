@@ -1,0 +1,16 @@
+{
+  "name": "postwire-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for PostWire — let Claude, Cursor, or any AI agent post to TikTok, Instagram, YouTube, X, LinkedIn, Bluesky, Telegram & more.",
+  "type": "module",
+  "bin": { "postwire-mcp": "index.js" },
+  "files": ["index.js", "README.md"],
+  "keywords": [
+    "mcp", "model-context-protocol", "social-media", "tiktok", "instagram", "youtube",
+    "twitter", "x", "linkedin", "bluesky", "telegram", "ai-agent", "claude", "cursor",
+    "social-media-api", "posting", "automation", "ayrshare-alternative", "upload-post"
+  ],
+  "homepage": "https://postwire.io",
+  "license": "MIT",
+  "dependencies": { "@modelcontextprotocol/sdk": "^1.0.0" }
+}
