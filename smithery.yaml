@@ -1,0 +1,16 @@
+# Smithery configuration — https://smithery.ai/docs/build/project-config
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - postwireApiKey
+    properties:
+      postwireApiKey:
+        type: string
+        title: PostWire API Key
+        description: Your PostWire API key. Get one free at https://postwire.io/dashboard.html
+  commandFunction: |-
+    (config) => ({ command: 'node', args: ['index.js'], env: { POSTWIRE_API_KEY: config.postwireApiKey } })
+  exampleConfig:
+    postwireApiKey: pw_live_xxxxxxxxxxxxxxxxxxxx
