@@ -1,10 +1,10 @@
 # postwire-mcp
 
-**Let your AI agent post to social media.** An [MCP](https://modelcontextprotocol.io) server for [PostWire](https://postwire.io) — give Claude, Cursor, or any agent the ability to publish to **TikTok, Instagram, YouTube, X, LinkedIn, Bluesky, Telegram, Mastodon & Discord** with one tool call.
+**Let your AI agent post to social media.** An [MCP](https://modelcontextprotocol.io) server for [PostWire](https://postwire.io/?utm_source=github&utm_medium=readme&utm_campaign=postwire_mcp) — give Claude, Cursor, or any agent the ability to publish to **TikTok, Instagram, YouTube, X, LinkedIn, Bluesky, Telegram, Mastodon & Discord** with one tool call.
 
 ## Quick start
 
-1. Get a free API key at **https://postwire.io/dashboard.html** and connect your accounts.
+1. Get a free API key at **https://postwire.io/dashboard.html?utm_source=github&utm_medium=readme&utm_campaign=quickstart** and connect your accounts.
 2. Add to your MCP client (e.g. Claude Desktop / Cursor):
 
 ```json
@@ -27,4 +27,4 @@ Now your agent has two tools:
 ## Why PostWire
 One API + a real MCP server to post everywhere. Flat per-brand pricing (50 brands for $99 — vs Ayrshare's ~$779). Free tier, no card.
 
-MIT © PostWire · https://postwire.io
+MIT © PostWire · https://postwire.io/?utm_source=github&utm_medium=readme&utm_campaign=footer
