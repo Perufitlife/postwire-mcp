@@ -1,16 +1,51 @@
 {
   "name": "postwire-mcp",
-  "version": "0.1.0",
-  "description": "MCP server for PostWire — let Claude, Cursor, or any AI agent post to TikTok, Instagram, YouTube, X, LinkedIn, Bluesky, Telegram & more.",
+  "version": "0.3.1",
+  "description": "MCP server for PostWire with Smart Distribute: one prompt \u2192 the BEST NATIVE post for each platform (right hashtags, length, SEO & format \u2014 never the same text everywhere), then publish to TikTok, Instagram, YouTube, X, LinkedIn, Bluesky, Mastodon, Telegram & more. For Claude, Cursor or any AI agent.",
   "type": "module",
-  "bin": { "postwire-mcp": "index.js" },
-  "files": ["index.js", "README.md"],
-  "keywords": [
-    "mcp", "model-context-protocol", "social-media", "tiktok", "instagram", "youtube",
-    "twitter", "x", "linkedin", "bluesky", "telegram", "ai-agent", "claude", "cursor",
-    "social-media-api", "posting", "automation", "ayrshare-alternative", "upload-post"
+  "bin": {
+    "postwire-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
   ],
-  "homepage": "https://postwire.io",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-social-media",
+    "social-media-generator",
+    "smart-distribute",
+    "cross-posting",
+    "social-media",
+    "tiktok",
+    "instagram",
+    "youtube",
+    "twitter",
+    "x",
+    "linkedin",
+    "bluesky",
+    "telegram",
+    "ai-agent",
+    "claude",
+    "cursor",
+    "social-media-api",
+    "posting",
+    "automation",
+    "ayrshare-alternative",
+    "upload-post"
+  ],
+  "homepage": "https://postwire.io/?utm_source=github&utm_medium=package&utm_campaign=homepage",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Perufitlife/postwire-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Perufitlife/postwire-mcp/issues"
+  },
   "license": "MIT",
-  "dependencies": { "@modelcontextprotocol/sdk": "^1.0.0" }
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "mcpName": "io.github.Perufitlife/postwire-mcp"
 }
