@@ -38,7 +38,7 @@ const server = new Server({ name: "postwire", version: JSON.parse(readFileSync(n
 
 const TOOLS = [
   {
-    name: "generate_posts",
+    name: "generate_posts", annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
     description: "Smart Distribute — PostWire's native AI writer. Give ONE prompt (and optional media) and it writes the BEST NATIVE post for EACH platform: correct character limits, hashtag rules, SEO title+tags for YouTube, hook-first captions for TikTok/Reels, professional framing for LinkedIn (link-in-comment), thread-friendly text for X (link-in-reply), CamelCase tags for Mastodon, and more. It does NOT send the same text everywhere — each platform gets its own optimized draft. Returns { drafts: { <platform>: { text, title?, tags? } } }. Review/edit, then pass to post_to_social as per_platform.",
     inputSchema: {
       type: "object",
@@ -51,7 +51,7 @@ const TOOLS = [
     },
   },
   {
-    name: "post_to_social",
+    name: "post_to_social", annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
     description: "Publish to one or more social platforms via PostWire, in parallel. For best results, first call generate_posts to get a NATIVE draft per platform, then pass them here as `per_platform` (PostWire never just copies the same text everywhere). Or pass a single `text` for a quick same-everywhere post. Connect accounts first at https://postwire.io/dashboard.html. Returns per-platform results (each has an id you can pass to get_post_status).",
     inputSchema: {
       type: "object",
@@ -68,7 +68,7 @@ const TOOLS = [
     },
   },
   {
-    name: "get_post_status",
+    name: "get_post_status", annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     description: "Check the processing/publish status of a post previously created with post_to_social.",
     inputSchema: {
       type: "object",
@@ -79,8 +79,8 @@ const TOOLS = [
       required: ["platform", "id"],
     },
   },
-  { name: "list_platforms", description: "List the social platforms PostWire supports and the fields each needs.", inputSchema: { type: "object", properties: {} } },
-  { name: "my_account", description: "Show the PostWire account: plan, monthly usage, and connected platforms.", inputSchema: { type: "object", properties: {} } },
+  { name: "list_platforms", annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true }, description: "List the social platforms PostWire supports and the fields each needs.", inputSchema: { type: "object", properties: {} } },
+  { name: "my_account", annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true }, description: "Show the PostWire account: plan, monthly usage, and connected platforms.", inputSchema: { type: "object", properties: {} } },
 ];
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }));
