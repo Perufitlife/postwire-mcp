@@ -4,6 +4,7 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { ListToolsRequestSchema, CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+import { readFileSync } from "node:fs";
 
 const API = process.env.POSTWIRE_API_BASE || "https://postwire.io";
 const KEY = process.env.POSTWIRE_API_KEY || "";
@@ -18,7 +19,22 @@ async function api(path, opts = {}) {
   return j;
 }
 
-const server = new Server({ name: "postwire", version: "0.3.0" }, { capabilities: { tools: {} } });
+// Shown when POSTWIRE_API_KEY is missing. An agent relays this to its user verbatim, so it has to
+// read as instructions a person can follow, not as a stack trace.
+const NO_KEY = {
+  error: "no_api_key",
+  what_to_do: "PostWire needs a free API key before it can post. Ask the user to get one — it takes about a minute.",
+  steps: [
+    "1. Open https://postwire.io/dashboard.html and sign up (email + password).",
+    "2. Connect a social account — one OAuth click, no app review needed.",
+    "3. Copy the API key shown on that page.",
+    "4. Set POSTWIRE_API_KEY in this MCP server's env and restart it.",
+  ],
+  cost: "Free plan: 1 brand, every network it connects, 30 posts a month. No card. Starter is $9/month for 3 brands and 300 posts.",
+  meanwhile: "list_platforms works without a key — call it to show which networks are supported and what each one needs.",
+};
+
+const server = new Server({ name: "postwire", version: JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf8")).version }, { capabilities: { tools: {} } });
 
 const TOOLS = [
   {
@@ -71,8 +87,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }))
 server.setRequestHandler(CallToolRequestSchema, async (req) => {
   const { name, arguments: a } = req.params;
   try {
-    if (!KEY) throw new Error("Set POSTWIRE_API_KEY (get one free at https://postwire.io/dashboard.html)");
+    // The catalogue is public: answer it even with no key so the agent can show what PostWire
+    // does before anyone signs up.
     if (name === "list_platforms") return text(await api("/api/platforms"));
+    if (!KEY) return text(NO_KEY);
     if (name === "my_account") return text(await api("/api/me"));
     if (name === "generate_posts")
       return text(await api("/api/generate", { method: "POST", body: JSON.stringify({ prompt: a.prompt, platforms: a.platforms, media_url: a.media_url }) }));

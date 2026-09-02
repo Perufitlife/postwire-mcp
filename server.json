@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Perufitlife/postwire-mcp",
-  "description": "Post & schedule to TikTok, Instagram, YouTube, LinkedIn, X, Bluesky & more in one call.",
+  "description": "One prompt, a native post per network: TikTok, Instagram, YouTube, LinkedIn, X. Free, no card.",
   "websiteUrl": "https://postwire.io/?utm_source=mcp_registry&utm_medium=directory&utm_campaign=listing",
   "repository": {
     "url": "https://github.com/Perufitlife/postwire-mcp",
     "source": "github"
   },
-  "version": "0.3.1",
+  "version": "0.3.3",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "postwire-mcp",
-      "version": "0.3.1",
+      "version": "0.3.3",
       "transport": {
         "type": "stdio"
       },
