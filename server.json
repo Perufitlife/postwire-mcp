@@ -1,18 +1,26 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Perufitlife/postwire-mcp",
-  "description": "One prompt, a native post per network: TikTok, Instagram, YouTube, LinkedIn, X. Free, no card.",
-  "websiteUrl": "https://postwire.io/?utm_source=mcp_registry&utm_medium=directory&utm_campaign=listing",
+  "title": "PostWire",
+  "description": "Writes a native post per network from one idea and publishes it: TikTok, Instagram, YouTube & more",
+  "websiteUrl": "https://postwire.io/mcp/?utm_source=mcp_registry&utm_medium=directory&utm_campaign=listing",
   "repository": {
     "url": "https://github.com/Perufitlife/postwire-mcp",
     "source": "github"
   },
-  "version": "0.3.4",
+  "icons": [
+    {
+      "src": "https://postwire.io/icon-1024.png",
+      "mimeType": "image/png",
+      "sizes": ["1024x1024"]
+    }
+  ],
+  "version": "0.3.5",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "postwire-mcp",
-      "version": "0.3.4",
+      "version": "0.3.5",
       "transport": {
         "type": "stdio"
       },
@@ -21,6 +29,21 @@
           "name": "POSTWIRE_API_KEY",
           "description": "Your PostWire API key (free at https://postwire.io/dashboard.html)",
           "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://postwire.io/api/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Optional: 'Bearer <your PostWire API key>'. Leave it unset to sign in with OAuth 2.1 instead.",
+          "isRequired": false,
           "isSecret": true,
           "format": "string"
         }
