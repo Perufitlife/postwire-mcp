@@ -21,8 +21,6 @@
     "tiktok",
     "instagram",
     "youtube",
-    "twitter",
-    "x",
     "linkedin",
     "bluesky",
     "telegram",
@@ -33,7 +31,11 @@
     "posting",
     "automation",
     "ayrshare-alternative",
-    "upload-post"
+    "upload-post",
+    "facebook",
+    "mastodon",
+    "discord",
+    "n8n"
   ],
   "homepage": "https://postwire.io/?utm_source=github&utm_medium=package&utm_campaign=homepage",
   "repository": {
