@@ -2,18 +2,26 @@
 
 **Your agent writes the post, picks the right shape for each network, and publishes it.**
 
-An [MCP](https://modelcontextprotocol.io) server for [PostWire](https://postwire.io/?utm_source=github&utm_medium=readme&utm_campaign=postwire_mcp). Give Claude, Cursor, or any agent one idea and it publishes a *native* post to TikTok, Instagram, YouTube, X, LinkedIn, Reddit, Bluesky, Mastodon, Telegram and Discord — not the same text pasted ten times.
+An [MCP](https://modelcontextprotocol.io) server for [PostWire](https://postwire.io/?utm_source=github&utm_medium=readme&utm_campaign=postwire_mcp). Give Claude, Cursor, or any agent one idea and it publishes a *native* post to TikTok, Instagram, Facebook Pages, YouTube, LinkedIn, Bluesky, Mastodon, Telegram and Discord — not the same text pasted nine times. (X and Reddit are **not** available yet.)
 
 ```
 you:    "post the demo video — we shipped scheduling today"
 agent:  → YouTube  title + description + tags, 16:9
         → TikTok   hook in the first line, 4 tags
         → LinkedIn no link in the body, link in the first comment
-        → X        under 280, link in a reply
+        → Bluesky  under 300 characters, link as a card
         published. 4/4.
 ```
 
-## Quick start
+## Hosted (no install)
+
+PostWire also runs as a remote MCP server at `https://postwire.io/api/mcp` (Streamable HTTP, OAuth 2.1 sign-in or `Authorization: Bearer pw_live_…`), with 15 tools including `plan_week`, `schedule_post` and `create_upload_link`.
+
+- **Claude**: listed in Claude's connector directory — [add PostWire to Claude](https://claude.ai/directory/bc01e7da-eba7-4754-9e88-6cacae80f000), or paste the URL as a custom connector.
+- **Claude Code**: `claude mcp add --transport http postwire https://postwire.io/api/mcp`
+- Official MCP Registry: `io.github.Perufitlife/postwire-mcp`.
+
+## Quick start (local, npm)
 
 1. Get a free API key at **[postwire.io/dashboard.html](https://postwire.io/dashboard.html?utm_source=github&utm_medium=readme&utm_campaign=quickstart)** and connect an account. One OAuth click — PostWire already holds the platform approvals, so there is no app review to wait for.
 2. Add it to your MCP client:
@@ -48,8 +56,11 @@ Failures are refused up front rather than half-published: a video network with n
 
 ## Platforms
 
-**One OAuth click** — TikTok · Instagram · YouTube · X · LinkedIn · Reddit · Facebook
+**One OAuth click** — TikTok · Instagram · Facebook Pages · YouTube · LinkedIn (personal profiles)
 **Token or webhook** — Bluesky · Mastodon · Telegram · Discord
+**Not available yet** — X · Reddit
+
+You connect your accounts to PostWire's already-approved apps (TikTok Direct Post audit, Meta App Review, Google verification of `youtube.upload`), so you never need your own developer app.
 
 ## Pricing
 
@@ -61,8 +72,9 @@ Per **brand**, never per network. Connect a business once and every one of its a
 | **Starter** | 3 | 300 | $9/mo |
 | **Pro** | 10 | 2,000 | $29/mo |
 | **Agency** | 50 | 15,000 | $99/mo |
+| **Scale** | 200 | unlimited | $299/mo |
 
-Ten client businesses on five networks each is **$29 here**. Buffer bills per channel; Ayrshare's comparable tier is $299.
+A post counts once per network. Ten client businesses on five networks each is **$29 here**; Buffer bills per channel. Paid plans have a 14-day refund. Current prices: [postwire.io/pricing](https://postwire.io/pricing/?utm_source=github&utm_medium=readme&utm_campaign=pricing).
 
 ## REST too
 
@@ -72,7 +84,7 @@ Everything the MCP server does is a plain HTTP call, if you would rather not run
 curl -X POST https://postwire.io/api/post \
   -H "Authorization: Bearer $POSTWIRE_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"platforms":["x","bluesky"],"text":"shipped."}'
+  -d '{"platforms":["bluesky","mastodon"],"text":"shipped."}'
 ```
 
 Docs: [postwire.io](https://postwire.io/?utm_source=github&utm_medium=readme&utm_campaign=docs)

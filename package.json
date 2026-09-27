@@ -1,7 +1,7 @@
 {
   "name": "postwire-mcp",
-  "version": "0.3.4",
-  "description": "MCP server for PostWire with Smart Distribute: one prompt → the BEST NATIVE post for each platform (right hashtags, length, SEO & format — never the same text everywhere), then publish to TikTok, Instagram, YouTube, X, LinkedIn, Bluesky, Mastodon, Telegram & more. For Claude, Cursor or any AI agent.",
+  "version": "0.3.5",
+  "description": "MCP server for PostWire with Smart Distribute: one prompt → the BEST NATIVE post for each platform (right hashtags, length, SEO & format — never the same text everywhere), then publish to TikTok, Instagram, Facebook Pages, YouTube, LinkedIn, Bluesky, Mastodon, Telegram & Discord. For Claude, Cursor or any AI agent.",
   "type": "module",
   "bin": {
     "postwire-mcp": "index.js"

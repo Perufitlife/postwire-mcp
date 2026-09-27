@@ -12,7 +12,7 @@ const KEY = process.env.POSTWIRE_API_KEY || "";
 async function api(path, opts = {}) {
   const r = await fetch(API + path, {
     ...opts,
-    headers: { "Content-Type": "application/json", ...(KEY ? { Authorization: `Bearer ${KEY}` } : {}), ...(opts.headers || {}) },
+    headers: { "Content-Type": "application/json", "X-PostWire-Source": "mcp-local", ...(KEY ? { Authorization: `Bearer ${KEY}` } : {}), ...(opts.headers || {}) },
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(j.error || `PostWire API ${r.status}`);
