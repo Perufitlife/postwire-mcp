@@ -2,7 +2,7 @@
 
 **Your agent writes the post, picks the right shape for each network, and publishes it.**
 
-An [MCP](https://modelcontextprotocol.io) server for [PostWire](https://postwire.io/?utm_source=github&utm_medium=readme&utm_campaign=postwire_mcp). Give Claude, Cursor, or any agent one idea and it publishes a *native* post to TikTok, Instagram, Facebook Pages, YouTube, LinkedIn, Bluesky, Mastodon, Telegram and Discord — not the same text pasted nine times. (X and Reddit are **not** available yet.)
+An [MCP](https://modelcontextprotocol.io) server for [PostWire](https://postwire.io/?utm_source=github&utm_medium=readme&utm_campaign=postwire_mcp). Give Claude, Cursor, or any agent one idea and it publishes a *native* post to TikTok, Instagram, Facebook Pages, YouTube, LinkedIn, Bluesky, Mastodon, Telegram, Discord, Slack, Nostr and X, plus long-form articles on WordPress, Dev.to and Hashnode — not the same text pasted fourteen times.
 
 ```
 you:    "post the demo video — we shipped scheduling today"
@@ -15,7 +15,7 @@ agent:  → YouTube  title + description + tags, 16:9
 
 ## Hosted (no install)
 
-PostWire also runs as a remote MCP server at `https://postwire.io/api/mcp` (Streamable HTTP, OAuth 2.1 sign-in or `Authorization: Bearer pw_live_…`), with 15 tools including `plan_week`, `schedule_post` and `create_upload_link`.
+PostWire also runs as a remote MCP server at `https://postwire.io/api/mcp` (Streamable HTTP, OAuth 2.1 sign-in or `Authorization: Bearer pw_live_…`), with 22 tools: everything below plus `plan_week`, `bulk_schedule`, `schedule_post`, `create_recurring_post`, `list_brands`, `create_brand`, `create_connect_link`, `create_upload_link`, `make_video_from_text`, `get_post_performance`, `replicate_top_post`, `check_video_quality` and more. The hosted server is the fastest way to get all of them.
 
 - **Claude**: listed in Claude's connector directory — [add PostWire to Claude](https://claude.ai/directory/bc01e7da-eba7-4754-9e88-6cacae80f000), or paste the URL as a custom connector.
 - **Claude Code**: `claude mcp add --transport http postwire https://postwire.io/api/mcp`
@@ -42,7 +42,9 @@ Client-specific setup: [Claude Desktop](https://postwire.io/mcp/claude-desktop/)
 
 No key yet? `list_platforms` still answers, so you can see what is supported before signing up.
 
-## Tools
+## Tools (local package)
+
+The npm package ships the five core tools; the [hosted server](#hosted-no-install) has all 22.
 
 | Tool | What it does |
 |---|---|
@@ -57,8 +59,9 @@ Failures are refused up front rather than half-published: a video network with n
 ## Platforms
 
 **One OAuth click** — TikTok · Instagram · Facebook Pages · YouTube · LinkedIn (personal profiles)
-**Token or webhook** — Bluesky · Mastodon · Telegram · Discord
-**Not available yet** — X · Reddit
+**Token or webhook** — Bluesky · Mastodon · Telegram · Discord · Slack · Nostr
+**Articles** — WordPress · Dev.to · Hashnode
+**X** — pay-per-use credits on the paid plans (X charges for every post): threads and a reply under the post for the link. [Details](https://postwire.io/docs/x/)
 
 You connect your accounts to PostWire's already-approved apps (TikTok Direct Post audit, Meta App Review, Google verification of `youtube.upload`), so you never need your own developer app.
 
