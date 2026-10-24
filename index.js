@@ -83,14 +83,42 @@ const TOOLS = [
   { name: "my_account", annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true }, description: "Show the PostWire account: plan, monthly usage, and connected platforms.", inputSchema: { type: "object", properties: {} } },
 ];
 
-server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }));
+// Since 0.4.0 this package is a thin stdio bridge to the hosted server (https://postwire.io/api/mcp),
+// so a local install gets the same 22 tools as the Claude connector. TOOLS above is only the offline
+// fallback, used when the hosted server can't be reached.
+const MCP = API + "/api/mcp";
+const LOCAL = new Set(TOOLS.map((t) => t.name));
+let rid = 0;
+async function rpc(method, params) {
+  const r = await fetch(MCP, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json, text/event-stream", "X-PostWire-Source": "mcp-local", ...(KEY ? { Authorization: `Bearer ${KEY}` } : {}) },
+    body: JSON.stringify({ jsonrpc: "2.0", id: ++rid, method, params }),
+  });
+  const raw = await r.text();
+  // The hosted server answers plain JSON; an SSE frame ("data: {...}") is accepted too.
+  const body = raw.trimStart().startsWith("{") ? raw : (raw.split("\n").find((l) => l.startsWith("data:")) || "").slice(5);
+  const j = JSON.parse(body);
+  if (j.error) throw Object.assign(new Error(j.error.message || "PostWire MCP error"), { code: j.error.code });
+  return j.result;
+}
+
+let remoteTools = null;
+server.setRequestHandler(ListToolsRequestSchema, async () => {
+  try { remoteTools = remoteTools || (await rpc("tools/list", {})).tools; return { tools: remoteTools }; }
+  catch { return { tools: TOOLS }; }
+});
 server.setRequestHandler(CallToolRequestSchema, async (req) => {
-  const { name, arguments: a } = req.params;
+  const { name, arguments: a = {} } = req.params;
+  if (!KEY && name !== "list_platforms") return text(NO_KEY);
+  try { return await rpc("tools/call", { name, arguments: a }); }
+  catch (e) { if (e.code === undefined && LOCAL.has(name)) return local(name, a); return { content: [{ type: "text", text: "ERROR: " + String(e.message || e) }], isError: true }; }
+});
+
+// Offline fallback: the original REST calls for the five core tools.
+async function local(name, a) {
   try {
-    // The catalogue is public: answer it even with no key so the agent can show what PostWire
-    // does before anyone signs up.
     if (name === "list_platforms") return text(await api("/api/platforms"));
-    if (!KEY) return text(NO_KEY);
     if (name === "my_account") return text(await api("/api/me"));
     if (name === "generate_posts")
       return text(await api("/api/generate", { method: "POST", body: JSON.stringify({ prompt: a.prompt, platforms: a.platforms, media_url: a.media_url }) }));
@@ -100,7 +128,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => {
       return text(await api(`/api/post/status?platform=${encodeURIComponent(a.platform)}&id=${encodeURIComponent(a.id)}`));
     throw new Error("unknown tool " + name);
   } catch (e) { return { content: [{ type: "text", text: "ERROR: " + String(e.message || e) }], isError: true }; }
-});
+}
 const text = (o) => ({ content: [{ type: "text", text: JSON.stringify(o, null, 2) }] });
 
 await server.connect(new StdioServerTransport());
