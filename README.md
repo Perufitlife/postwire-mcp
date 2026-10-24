@@ -42,9 +42,9 @@ Client-specific setup: [Claude Desktop](https://postwire.io/mcp/claude-desktop/)
 
 No key yet? `list_platforms` still answers, so you can see what is supported before signing up.
 
-## Tools (local package)
+## Tools
 
-The npm package ships the five core tools; the [hosted server](#hosted-no-install) has all 22.
+From 0.4.0 the local package is a thin bridge to the [hosted server](#hosted-no-install), so it exposes the same 22 tools (it falls back to the five core tools below if postwire.io can't be reached). The core ones:
 
 | Tool | What it does |
 |---|---|
